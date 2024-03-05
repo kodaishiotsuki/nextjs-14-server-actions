@@ -1,8 +1,9 @@
+import { db } from "@/lib/prisma";
 import Link from "next/link";
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = Number(params.id);
-  const todo = await prisma.todo.findUnique({
+  const todo = await db.todo.findUnique({
     where: {
       id,
     },

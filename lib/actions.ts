@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { db } from "./prisma";
 
 const schema = z.object({
   name: z.string().min(2),
@@ -22,7 +23,7 @@ export const addTodo = async (prevState: any, data: FormData) => {
 
   try {
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    await prisma.todo.create({ data: { name } });
+    await db.todo.create({ data: { name } });
   } catch (e) {
     return {
       message: "Failed to add",
@@ -33,7 +34,7 @@ export const addTodo = async (prevState: any, data: FormData) => {
 };
 
 export const deleteTodo = async (id: number) => {
-  await prisma.todo.delete({
+  await db.todo.delete({
     where: {
       id,
     },
@@ -44,7 +45,7 @@ export const deleteTodo = async (id: number) => {
 export const updateTodo = async (id: number, data: FormData) => {
   const name = data.get("name") as string;
   const isCompleted = data.get("isCompleted") as string;
-  await prisma.todo.update({
+  await db.todo.update({
     where: {
       id,
     },

@@ -1,9 +1,9 @@
-import prisma from "@/lib/prisma";
 import Link from "next/link";
 import DeleteButton from "@/components/delete-button";
+import { db } from "@/lib/prisma";
 
 const Page = async () => {
-  const todos = await prisma.todo.findMany();
+  const todos = await db.todo.findMany();
 
   return (
     <div className="m-8">
